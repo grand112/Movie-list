@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .success, .error {
+            color:white;
+            padding: 5px;
+        }
+        .success{
+            background-color: green;
+        }
+        .error{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="content px-5">
+        <div class="p-3 h1 d-flex justify-content-center">Movie List</div>
+        <form class="movie">
+            <div class="form-group">
+            <label for="title">Movie title</label>
+            <input type="text" class="form-control title" placeholder="Enter movie title">
+            </div>
+            <div class="form-group">
+                <label for="director">Director of the movie</label>
+                <input type="text" class="form-control director" placeholder="Enter the name of the director">
+            </div>
+            <div class="form-group">
+                <label for="rating">Rate the movie</label>
+                <select class="form-control rating">
+                    <option>pick a rating</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nickname">Insert your nickname</label>
+                <input type="text" class="form-control nick" placeholder="Enter nickname">
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+        </form>
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Director</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Added by</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
+    <script src=./app.js></script>
+</body>
+</html>
