@@ -1,3 +1,3 @@
 # Movie list
 
-A simple list to store information about movies. Prepared based on ES6. Styled with Bootstrap.
+A simple list to store information about movies. Prepared on the basis of ES6, styled with Bootstrap.
