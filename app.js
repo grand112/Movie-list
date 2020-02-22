@@ -1,5 +1,5 @@
 class Movie {
-    constructor(title,director,rate,nick){
+    constructor(title,director,rate,nick,id){
         this.title=title;
         this.director=director;
         this.rate=rate;
@@ -54,7 +54,52 @@ class Table {
     }
 }
 
-let id=0
+//Local storage
+class Store{
+    static getMovies(){
+        let movies;
+        if(localStorage.getItem('movies')===null){
+            movies =[];
+        }else{
+            movies = JSON.parse(localStorage.getItem('movies'));
+        }
+
+        return movies;
+    }
+
+    static showMovie(){
+        const movies =Store.getMovies();
+
+        movies.forEach(function(movie){
+            const table = new Table;
+
+            table.addMovie(movie);
+        });
+    }
+
+    static addMovieStorage(movie){
+        const movies = Store.getMovies();
+
+        movies.push(movie);
+
+        localStorage.setItem('movies', JSON.stringify(movies));
+    }
+
+    static removeMovie(id){
+        const movies = Store.getMovies();
+
+        movies.forEach(function(movie, index){
+            if(movie.id == id){
+                movies.splice(index,1);
+            }
+        });
+
+        localStorage.setItem('movies', JSON.stringify(movies));
+    }
+}
+
+//display movies from local storage on DOM load
+document.addEventListener('DOMContentLoaded', Store.showMovie);
 // Submit button
 document.querySelector('.movie').addEventListener("submit", function(e){
     
@@ -65,13 +110,28 @@ document.querySelector('.movie').addEventListener("submit", function(e){
 
     const table = new Table();
 
+    //setting id
+    let id;
+    //if local storage is empty then id = 0
+    if(localStorage.getItem('movies')===null){
+        id=0;
+    // if not then parse to table of objects, then get the last object which is the last added movie and get its values,
+    // from the table of values get the last element which is the last added id, then assign a new id
+    }else{
+        let moviesStorage =JSON.parse(localStorage.getItem('movies'));
+        let lastMovie = Object.values(moviesStorage[moviesStorage.length-1]);
+        let properId = lastMovie[lastMovie.length-1];
+        id=properId;
+    }
+
     //Validate
     if(title === '' || director === '' || rate === 'pick a rating' || nick === '')
     {
         table.info('Please fill all fields','error');
     }else{
-        const movie = new Movie (title, director, rate,nick,id++);
+        const movie = new Movie (title, director, rate,nick,++id);
         table.addMovie(movie);
+        Store.addMovieStorage(movie);
         table.clear();
         table.info('Move has been added!','success');
     }
@@ -83,6 +143,8 @@ document.querySelector('.movie').addEventListener("submit", function(e){
 document.querySelector('.tbody').addEventListener("click", function(e){
     const table = new Table();
     table.delete(e.target); 
+    //Delete movie after taking its id
+    Store.removeMovie(e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent);
     table.info('Movie has been deleted from the list!','success');
     e.preventDefault();
 })
